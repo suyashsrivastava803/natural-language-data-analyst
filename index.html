@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7f7f4" />
+  <meta name="description" content="Explore CSV and Excel files with plain language, charts, and transparent calculations on your machine." />
+  <title>Fieldnote 2.0 — ask your data</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-top"><a class="brand" href="#"><span class="brand-mark"><span></span><span></span><span></span></span><span>fieldnote</span></a><div class="auth-tools"><button class="utility-button" id="authLanguageToggle">हिंदी</button><button class="utility-button theme-button" id="authThemeToggle" aria-label="Switch theme">◐</button></div></div>
+    <div class="auth-card"><div class="eyebrow"><span class="eyebrow-line"></span><span data-l10n="A QUIETER WAY TO WORK WITH DATA">A QUIETER WAY TO WORK WITH DATA</span></div><h1 id="authTitle" data-l10n="Welcome back.">Welcome back.</h1><p class="auth-intro" id="authIntro" data-l10n="Sign in to open your private Fieldnote workspace.">Sign in to open your private Fieldnote workspace.</p>
+      <form id="authForm"><label class="auth-label" for="authUsername" data-l10n="Username">Username</label><input id="authUsername" name="username" autocomplete="username" required minlength="3" maxlength="64" placeholder="Your username" />
+        <label class="auth-label" for="authPassword" data-l10n="Password">Password</label><input id="authPassword" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128" placeholder="At least 8 characters" />
+        <div class="auth-error hidden" id="authError" role="alert"></div><button class="auth-submit" id="authSubmit" type="submit" data-l10n="Sign in">Sign in</button></form>
+      <div class="auth-switch"><span id="authSwitchText" data-l10n="New to Fieldnote?">New to Fieldnote?</span> <button id="authSwitchButton" type="button" data-l10n="Create an account">Create an account</button></div>
+      <div class="auth-note"><span>◉</span><span data-l10n="Your workspace and account stay on this machine.">Your workspace and account stay on this machine.</span></div>
+    </div><div class="auth-footer">FIELDNOTE · LOCAL DATA WORKSPACE</div>
+  </section>
+  <div class="app-shell hidden" id="appShell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Fieldnote home"><span class="brand-mark"><span></span><span></span><span></span></span><span>fieldnote</span></a>
+      <div class="side-caption">YOUR WORKSPACE</div>
+      <button class="nav-item active" id="workspaceNav"><span class="nav-icon">▦</span> Workspace</button>
+      <div class="side-caption dataset-caption">YOUR DATA <span class="tiny-dot"></span></div>
+      <div class="dataset-card" id="datasetCard"><span class="file-icon">▤</span><span class="dataset-name" id="datasetName">No dataset yet</span><span class="dataset-menu">···</span></div>
+      <button class="upload-side" id="sidebarUpload"><span>＋</span> Add data</button>
+      <div class="sidebar-bottom"><div class="privacy-badge"><span>◉</span><div><strong>Your data stays yours</strong><small>Rows stay on this machine.</small></div></div><div class="side-footer"><span class="avatar">F</span><span id="sideUser">Personal workspace</span><span class="chevron">⌄</span></div></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar"><div class="breadcrumbs"><span>Workspace</span><span class="crumb-slash">/</span><strong id="crumbDataset">Overview</strong></div><div class="top-actions"><span class="local-pill"><i></i> Local analysis</span><button class="utility-button" id="languageToggle" aria-label="Change language">हिंदी</button><button class="utility-button theme-button" id="themeToggle" aria-label="Switch theme">◐</button><button class="icon-button" aria-label="Help" title="About Fieldnote" id="helpButton">?</button><button class="logout-button" id="logoutButton">Log out</button></div></header>
+      <div class="content-wrap">
+        <section class="intro-row"><div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR DATA, IN PLAIN ENGLISH</div><h1>Good questions make<br /><em>better decisions.</em></h1><p class="intro-copy">Bring a CSV. Ask what's on your mind. Get a clear answer, backed by a chart you can trust.</p></div><div class="date-stamp"><span class="date-dot"></span> A quieter way to work with data</div></section>
+
+        <section class="workspace-grid">
+          <div class="primary-column">
+            <section class="data-panel panel" id="uploadPanel">
+              <div class="panel-heading"><div><div class="section-kicker">01 <span>—</span> START WITH A FILE</div><h2>Bring your data in</h2></div><button class="text-button sample-link" id="sampleButton">Or try a sample <span>↗</span></button></div>
+              <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-label="Choose or drop a CSV file">
+                <div class="upload-art"><span class="upload-sheet">▤</span><span class="upload-arrow">↑</span></div>
+                <div class="drop-copy"><strong>Drop your CSV here</strong><span>or <button class="inline-link" id="browseButton">browse files</button> on your computer</span></div>
+                <div class="file-note"><span>CSV · XLSX</span><span>UP TO 25 MB</span><span>PRIVATE LOCAL SESSION</span></div>
+                <input id="fileInput" type="file" accept=".csv,.xlsx,.xlsm,text/csv" hidden />
+              </div>
+              <div class="dataset-summary hidden" id="datasetSummary"><div class="summary-file"><span class="summary-file-icon">▤</span><div><strong id="summaryFileName">sales.csv</strong><small id="summaryMeta">2,450 rows · 8 columns</small></div><button class="subtle-button" id="removeFile" aria-label="Remove dataset" title="Remove dataset">×</button></div><div class="column-chips" id="columnChips"></div>
+                <div class="data-tools"><button class="tool-button" id="previewToggle">▦ <span>Preview rows</span></button><button class="tool-button" id="duplicatesButton">Clean duplicates</button><button class="tool-button" id="emptyRowsButton">Remove incomplete</button><button class="tool-button" id="undoClean" disabled>Undo</button></div>
+                <div class="preview-area hidden" id="previewArea"><div class="preview-heading"><div><strong>First rows</strong><small id="previewMeta">A preview of your uploaded data</small></div><span id="qualitySummary">Data quality · checking</span></div><div class="table-scroll"><table id="previewTable"></table></div></div>
+                <div class="filter-builder"><span class="filter-label">FILTER THIS ANALYSIS</span><select id="filterColumn" aria-label="Choose filter column" disabled><option value="">Choose a column</option></select><select id="filterValue" aria-label="Choose filter value" disabled><option value="">Choose a value</option></select><button class="tool-button add-filter" id="addFilter" disabled>＋ Add</button><div class="active-filters" id="activeFilters"></div></div>
+              </div>
+              <div class="error-message hidden" id="fileError" role="alert"></div>
+            </section>
+
+            <section class="question-panel panel" id="questionPanel">
+              <div class="panel-heading"><div><div class="section-kicker">02 <span>—</span> ASK A QUESTION</div><h2>What would you like to know?</h2></div><span class="keyboard-hint">↵ <span>to ask</span></span></div>
+              <div class="question-box"><textarea id="questionInput" rows="2" placeholder="e.g. Which region brought in the most revenue?" aria-label="Ask a question about your data"></textarea><div class="question-controls"><span class="question-helper" id="questionHelper">Add a file first — your question will find its footing.</span><div class="ask-actions"><label class="ai-option" title="Works offline with built-in matching. If a model key is configured, the question and column names may be sent for interpretation."><input type="checkbox" id="useAI" disabled /> <span>Smart wording help</span></label><button class="ask-button" id="askButton" disabled>Find out <span>→</span></button></div></div></div>
+              <div class="suggestion-row"><span class="suggestion-label">A FEW IDEAS</span><button class="suggestion" data-question="What is the total revenue?">Total revenue <span>↗</span></button><button class="suggestion" data-question="Which region has the highest sales?">Best performing region <span>↗</span></button><button class="suggestion" data-question="Show revenue over time">Revenue over time <span>↗</span></button></div>
+            </section>
+
+            <section class="result-panel panel hidden" id="resultPanel" aria-live="polite">
+              <div class="result-topline"><div><div class="section-kicker">YOUR ANSWER <span>—</span> <span id="resultType">COMPARISON</span></div><h2 id="resultTitle">Revenue by region</h2></div><div class="export-actions"><button class="export-button" id="downloadButton">↓ <span>SVG</span></button><button class="export-button" id="pngButton">↓ <span>PNG</span></button><button class="export-button" id="csvButton">↓ <span>Results</span></button><button class="export-button" id="reportButton">↗ <span>Report</span></button></div></div>
+              <div class="chart-wrap" id="chartWrap"></div>
+              <div class="result-table-wrap" id="resultTableWrap"></div>
+              <div class="insight-box"><span class="insight-spark">✳</span><div><strong>What this tells you</strong><p id="explanation"></p><small id="methodNote"></small></div></div>
+              <div class="result-foot"><span id="resultFootnote">Based on all rows in your dataset</span><button class="text-button" id="newQuestion">Ask another <span>↗</span></button></div>
+            </section>
+          </div>
+
+          <aside class="right-column">
+            <section class="side-panel panel about-card"><div class="side-panel-head"><span class="side-panel-icon">✳</span><span>THE SHORT VERSION</span></div><h3>Analysis that shows its work.</h3><p>Fieldnote looks at your columns, works out what you're asking, and explains the result in everyday language.</p><div class="about-divider"></div><div class="about-points"><div><span class="point-num">01</span><span>See how your numbers were calculated</span></div><div><span class="point-num">02</span><span>Get a chart that fits the question</span></div><div><span class="point-num">03</span><span>Your file stays right here</span></div></div></section>
+            <section class="side-panel panel data-card"><div class="data-card-head"><div><div class="section-kicker">AT A GLANCE</div><h3>Your dataset</h3></div><span class="dataset-status" id="datasetStatus">WAITING</span></div><div class="empty-stats" id="emptyStats"><span class="empty-stat-icon">◌</span><span>Your data snapshot will<br />show up here.</span></div><div class="stats-grid hidden" id="statsGrid"><div class="stat-cell"><span>ROWS</span><strong id="statRows">—</strong></div><div class="stat-cell"><span>COLUMNS</span><strong id="statColumns">—</strong></div><div class="stat-cell wide"><span>NUMERIC FIELDS</span><strong id="statNumeric">—</strong></div><div class="stat-cell"><span>MISSING</span><strong id="statMissing">—</strong></div><div class="stat-cell"><span>DUPLICATES</span><strong id="statDuplicates">—</strong></div></div></section>
+            <section class="side-panel panel history-card"><div class="data-card-head"><div><div class="section-kicker">YOUR RECENT WORK</div><h3>Recent questions</h3></div><button class="text-button" id="clearHistory">Clear</button></div><div class="history-list" id="historyList"><span class="history-empty">Your questions will show up here.</span></div></section>
+            <section class="tip-card"><span class="tip-icon">↗</span><div><strong>A little specificity goes a long way.</strong><p>Try naming the thing you want to compare, like “average order value by channel.”</p></div></section>
+          </aside>
+        </section>
+        <footer class="page-footer"><span>Made for curious people and the spreadsheets they inherit.</span><span><span class="footer-leaf">✳</span> Fieldnote 2.1 <span class="footer-sep">·</span> Runs on this machine</span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast hidden" id="toast" role="status"></div>
+  <dialog id="helpDialog"><button class="dialog-close" id="closeHelp" aria-label="Close">×</button><div class="section-kicker">A NOTE FROM FIELDNOTE</div><h2>How it works</h2><p>The local Python server reads the file and calculates results. Your rows stay in memory on this machine for the server session. AI wording help is optional: when enabled, only your question and column names are sent to the configured model; data rows stay local.</p><p>Fieldnote can calculate totals, averages, medians, counts, comparisons, trends, and relationships. Each answer includes its method and the rows used. If the question is unclear, it asks you to be more specific.</p><p class="dialog-privacy">Stop the server to clear uploaded files from memory. Recent questions are saved in this browser only.</p></dialog>
+  <script src="app.js"></script>
+</body>
+</html>

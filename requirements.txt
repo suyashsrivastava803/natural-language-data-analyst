@@ -1,0 +1,2 @@
+# Optional: install this to enable .xlsx/.xlsm workbook uploads.
+openpyxl>=3.1,<4
